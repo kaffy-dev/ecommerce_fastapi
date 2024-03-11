@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, status, HTTPException
 
 from schema.order import Order, OrderCreate, orders
 from services.order import order_service
-from schema.product import products, Product
 
 order_router = APIRouter()
 
@@ -18,8 +17,8 @@ def list_orders():
 def create_order(payload: OrderCreate = Depends(order_service.check_availability)):
     customer_id: int = payload.customer_id
     product_ids: list[int] = payload.items
-
-    # get current order id
+        
+    # get order id
     order_id = len(orders) + 1
     new_order = Order(
         id=order_id,
